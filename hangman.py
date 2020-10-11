@@ -1,9 +1,6 @@
-import csv
 import random
 import time
-import pandas as pd
 import numpy as np
-import string
 
 print("*** HANGMAN GAME ***\n")
 time.sleep(1)
@@ -14,22 +11,23 @@ print("Tot calculatorul va incerca ca prin maxim 1200 de incercari sa gaseasca c
 time.sleep(3)
 
 
-#numar random
+#generare numar random
 numar_random = random.randint(1, 100)
 print("Numarul random ales este ",numar_random + 1, "\n")
 time.sleep(2)
 
-#citire fisier csv
+#citire din  fisier csv
 df = np.genfromtxt('cuvinte_de_verificat.txt', delimiter=';', dtype= None, encoding=None)
 print("Calculatorul trebuie sa rezolve jocul cu numarul", numar_random + 1, ", acesta aratand in felul urmator:\n")
 time.sleep(4)
+#afisarea intregului rand din fisierul csv care trebuie rezolvat
 rand = list(df)
-print(rand[numar_random])
+print(rand[numar_random], "\n")
 time.sleep(3)
 print("Calculatorul incepe rezolvarea\n")
 time.sleep(2)
 
-#algoritm de identificare a lungimii cuvintelor
+#algoritm de iverificare a lungimii cuvintelor [  suplimentar, dar necesar :)))  ]
 def comparare_lungime_cuvinte():
     if len(rand[numar_random][1]) == len(rand[numar_random][2]):
         print("Cuvintele au aceeasi lungime, se continua procesul de comparare\n")
@@ -40,59 +38,33 @@ def comparare_lungime_cuvinte():
 
 comparare_lungime_cuvinte()
 
+#separarea fisierului csv pe coloane
 cuvant_cenzurat = rand[numar_random][1]
 cuvant_necenzurat = rand[numar_random][2]
-#alfabet = []
-#alfabet = string.ascii_uppercase
 alfabet = ["A","Ă","Â","B","C","D","E","F","G","H","I","Î","J","K","L","M","N","O","P","Q","R","S","Ș","T","Ț","U","V","W","X","Y","Z"]
-
-
-
-def comparare_cenzurat_necenzurat():
-    for i in range(0, len(cuvant_necenzurat), 1):
-        if cuvant_necenzurat[i] == cuvant_cenzurat[i]:
-            print(cuvant_necenzurat[i])
-        else:
-            print(cuvant_cenzurat[i])
-
+#lista cu cifre se mai putea face si cu UTF 8, dar am avut probleme cu afisarea lor
 
 def litera_de_inlocuit():
+    incercari=0
     for i in range(0, len(cuvant_necenzurat)):
         for j in range(0, len(alfabet)):
             if cuvant_necenzurat[i] == alfabet[j] != cuvant_cenzurat[i].isalpha() :
                 print(cuvant_necenzurat[i], end="")
                 time.sleep(0.25)
                 j=j+1
+ #calcularea numarului de incercari pe care calculatorul le face pentru a afla cuvantul
+            while i != j:
+                incercari += 1
+                break
+    print("\n")
+    print("Calculatorul a rezolvat problema in ", incercari, "incercari")
 
 
-
-
-
-
-
+# am verificat fiecare caracter din cuvant, iar daca aceasta este litera, este afisata din prima, daca nu, aceasta trece prin loop-ul litera_de_inlocuit
+# unde fiecare caracter steluta este comparat cu fiecare caracter litera din cuvantul necenzurat si cu alfabetul.
 for i in range(0,len(cuvant_necenzurat)):
-    if cuvant_cenzurat[i].isalpha() == True:
-        print(cuvant_cenzurat[i], end="")
-        time.sleep(0.25)
-    elif cuvant_cenzurat[i].isalpha() == False:
+    if cuvant_cenzurat[i].isalpha() == False:
         litera_de_inlocuit()
         break
-
-
-
-def numar_de_incercari():
-    incercari = 0
-    for i in range(0, len(cuvant_necenzurat)):
-        for j in range(0, len(alfabet)):
-            if cuvant_necenzurat[i] == alfabet[j] != cuvant_cenzurat[i].isalpha() :
-                j=j+1
-                while i!=j:
-                    incercari +=1
-                    break
-    print("\n")
-    print("Calculatorul a rezolvat problema in ",incercari, "incercari")
-
-
-numar_de_incercari()
 
 
