@@ -40,10 +40,31 @@ comparare_lungime_cuvinte()
 
 cuvant_cenzurat = rand[numar_random][1]
 cuvant_necenzurat = rand[numar_random][2]
+alfabet = []
+alfabet = string.ascii_uppercase
+#alfabet = [A,Ă,Â,B,C,D,E,F,G,H,I,Î,J,K,L,M,N,O,P,Q,R,S,Ș,T,Ț,U,V,W,X,Y,Z]
 
 def comparare_cenzurat_necenzurat():
-    for i in range(0, len(rand[numar_random][2]), 1):
-        if cuvant_necenzurat[i] != cuvant_cenzurat[i]:
-            print("cuvintele nu seamana")
+    for i in range(0, len(cuvant_necenzurat), 1):
+        if cuvant_necenzurat[i] == cuvant_cenzurat[i]:
+            print(cuvant_necenzurat[i])
+        else:
+            print(cuvant_cenzurat[i])
+'''
+for i in range(0, len(alfabet), 1):
+    if cuvant_necenzurat[i] != cuvant_cenzurat[i]:
+        print(cuvant_cenzurat.replace(cuvant_cenzurat[i], alfabet[1]))
+'''
+for i in range(0,len(alfabet)):
+    if cuvant_cenzurat[i].isalpha() == True:
+        print(cuvant_cenzurat[i])
+    elif cuvant_cenzurat[i].isalpha() == False:
+        print(cuvant_necenzurat[i])
+
+
+
+
+
+
 
 comparare_cenzurat_necenzurat()
